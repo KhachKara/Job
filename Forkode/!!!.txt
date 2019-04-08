@@ -1,0 +1,114 @@
+https://mytischi.hh.ru/applicant/vacancy_response?vacancyId=30872275
+http://forkode.ru/?
+-----------------------------------------
+Вопрос 1
+Дан some_list=['1', '2', '3', '2', '2'].
+
+Напишите, как из него можно получить список не содержащий '2'.
+
+some_list=['1', '2', '3', '2', '2']
+result = []
+
+for i in some_list:
+    if i == '2':
+        pass
+    else:
+        result.append(i)
+print (result)
+-----------------------------------------
+Вопрос 2
+Как получить уникальные элементы списка?
+
+Приведите как минимум 2 способа решения.
+
+result = set(some_list)
+result = []
+for i in some_list:
+    if i in result:
+        pass
+    else:
+        result.append(i)
+print(result)
+-----------------------------------------
+Вопрос 3
+Авторы:
+
+CREATE TABLE author (
+
+id int(11) NOT NULL AUTO_INCREMENT,
+
+name varchar(255) DEFAULT NULL,
+
+birth_date datetime NOT NULL,
+
+PRIMARY KEY (id),
+
+);
+
+ 
+Книги, которые они написали:
+
+CREATE TABLE book (
+
+id int(11) NOT NULL AUTO_INCREMENT,
+
+title varchar(255) DEFAULT NULL,
+
+author_id int(11) NOT NULL,
+
+PRIMARY KEY (id),
+
+CONSTRAINT books_ibfk_1
+
+FOREIGN KEY (author_id) REFERENCES author (id)
+
+);
+
+ 
+Напишите запрос , выводящий всех авторов с количеством их книг.
+
+* Также можете написать решение используя Django ORM.
+
+select author.name as "Авторы", count(book.title) as "Количество", from author
+inner join book on book.author_id = author.id
+group by author.name
+order by 2 desc;
+----------------------------------------------------------------
+from django.db import models
+
+class Author(models.Model):
+    id = models.PositiveIntegerField(primary_key=True)
+    name = models.CharField(max_length=255)
+    birth_date = models.DateField()
+
+
+class Book(models.Model):
+    id = models.PositiveIntegerField(primary_key=True)
+    title = models.CharField(max_length=255)
+    author_id = models.ForeignKey(Author)
+
+# app это имя проекта в котором созданы объекты author и book
+from app.models import Author, Book
+
+auth = [[1, 'Godwin Lettice', '1906-03-06'], 
+        [2, 'Carie Crewe', '1946-10-20'], 
+        [3, 'Lodovico Savine', '1957-10-29']]
+
+books = [[1, 'Support.com Inc.', 1], 
+         [2, 'CareTrust REIT Inc.', 2], 
+         [3, 'Arch Capital Group Ltd.', 3]]
+
+myChoose = []
+
+for i in len(1, range(auth) + 1):
+    author_temp = Author.objects.get(id=i)
+    temp = []
+    k = 0
+    for j in len(1, range(books) + 1):
+        book_temp = Author.objects.get(id=j)
+        if author_temp[0] == book_temp[2]:
+            k += 1
+    temp.append([author_temp[1], k])
+    myChoose.append(temp)
+        
+myChoose.save()
